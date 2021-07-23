@@ -5,7 +5,6 @@ const useStyles = makeStyles((theme) => ({
     pageContent: {
         margin: theme.spacing(5),
         padding: theme.spacing(5),
-        position: 'absolute',
     },
 }));
 export default function Launches() {

@@ -1,46 +1,57 @@
-import React from 'react';
-import {
-    AppBar,
-    Toolbar,
-    Grid,
-    InputBase,
-    makeStyles,
-} from '@material-ui/core';
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Grid, makeStyles } from '@material-ui/core';
 
+import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
+import { filterLaunches } from '../store/actions/';
 const useStyles = makeStyles({
     root: {
         backgroundColor: '#fff',
+        position: 'fixed',
+        color: 'black',
+        paddingLeft: '500px',
+        marginLeft: '40px',
     },
-    searchInput: {
-        backgroundColor: '#fef',
-        opacity: '0.5',
-        padding: '0',
-        fontSize: '0.8rem',
-        borderRadius: '6px',
-        '&:hover': {
-            backgroundColor: '#eef',
-        },
-        '& .MuiSvgIcon-root': {
-            marginRight: '8px',
-        },
+    formControl: {
+        margin: '10px',
+        minWidth: 120,
     },
 });
 
 export default function Header() {
+    const [value, setValue] = useState('');
     const classes = useStyles();
-
+    const dispatch = useDispatch();
+    const handleChange = (event) => {
+        setValue(event.target.value);
+        dispatch(filterLaunches(launches, event.target.value));
+    };
+    console.log(value);
+    const launches = useSelector((state) => state.launches.filteredLaunches);
+    console.log('launches', launches);
     return (
         <AppBar position='static' className={classes.root}>
             <Toolbar>
                 <Grid container alignItems='center'>
-                    <Grid item>
-                        <InputBase
-                            placeholder='Search'
-                            className={classes.searchInput}
-                            // startAdornment={<SearchIcon fontSize='small' />}
-                        />
+                    <Grid item></Grid>
+                    <Grid item sm>
+                        <h1>SPACEX</h1>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel id='demo-simple-select-label'>
+                                Launches
+                            </InputLabel>
+                            <Select
+                                labelId='demo-simple-select-label'
+                                id='demo-simple-select'
+                                value={value}
+                                onChange={handleChange}
+                            >
+                                <MenuItem value='all'>All</MenuItem>
+                                <MenuItem value='upcoming'>Upcoming</MenuItem>
+                                <MenuItem value='past'>Past</MenuItem>
+                            </Select>
+                        </FormControl>
                     </Grid>
-                    <Grid item sm></Grid>
                 </Grid>
             </Toolbar>
         </AppBar>

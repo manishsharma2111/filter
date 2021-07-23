@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -8,10 +8,12 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { getLaunches } from '../store/actions/';
 import { CardActions, Button } from '@material-ui/core';
+import Details from './Details';
 
 const useStyles = makeStyles({
     card: {
-        maxWidth: 300,
+        maxHeight: '450px',
+        maxWidth: '250px',
         marginBottom: '20px',
         margin: 'auto',
         transition: '0.3s',
@@ -22,10 +24,13 @@ const useStyles = makeStyles({
     },
     media: {
         paddingTop: '56.25%',
+        width: '250px',
+        height: '250px',
+        objectFit: 'fill',
     },
     content: {
         textAlign: 'left',
-        padding: '30px',
+        padding: '10px',
     },
     divider: {
         margin: '20px',
@@ -53,13 +58,10 @@ export default function LaunchCard() {
     }, [dispatch]);
     const launch = useSelector((state) => state.launches);
 
-    console.log(launch);
-
     const renderCard = React.useMemo(
         () => (item, index) => {
             return (
                 <Card className={classes.card} key={index}>
-                    {console.log(item)}
                     <CardMedia
                         className={classes.media}
                         image={item.links.mission_patch}
@@ -70,15 +72,13 @@ export default function LaunchCard() {
                             variant={'h6'}
                             gutterBottom
                         >
-                            Nature Around Us
+                            Mission: {item.mission_name}
                         </Typography>
                         <Typography
                             className={'MuiTypography--subheading'}
                             variant={'caption'}
                         >
-                            We are going to learn different kinds of species in
-                            nature that live together to form amazing
-                            environment.
+                            Date:{item.launch_date_local}
                         </Typography>
                         <Divider className={classes.divider} light />
                         <CardActions>

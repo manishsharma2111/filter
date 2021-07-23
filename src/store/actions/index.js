@@ -1,4 +1,4 @@
-import { GET_LAUNCHES, LAUNCH_ERROR } from '../types';
+import { GET_LAUNCHES, LAUNCH_ERROR, FILTER_LAUNCHES } from '../types';
 import axios from 'axios';
 
 export const getLaunches = () => async (dispatch) => {
@@ -14,4 +14,21 @@ export const getLaunches = () => async (dispatch) => {
             type: LAUNCH_ERROR,
         });
     }
+};
+
+export const filterLaunches = (launches, time) => (dispatch) => {
+    console.log(time);
+    console.log('laun', launches);
+    dispatch({
+        type: FILTER_LAUNCHES,
+        payload: {
+            time: time,
+            items:
+                time === 'all'
+                    ? launches
+                    : time === 'upcoming'
+                    ? launches.filter((item) => item.upcoming === true)
+                    : launches.filter((item) => item.upcoming === false),
+        },
+    });
 };

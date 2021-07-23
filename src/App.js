@@ -42,6 +42,8 @@ const useStyles = makeStyles({
     appMain: {
         paddingLeft: '320px',
         width: '100%',
+        position: 'absolute',
+        paddingBottom: '5px',
     },
 });
 
