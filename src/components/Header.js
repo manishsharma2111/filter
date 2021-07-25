@@ -19,16 +19,16 @@ const useStyles = makeStyles({
 });
 
 export default function Header() {
-    const [value, setValue] = useState('');
     const classes = useStyles();
+    const [value, setValue] = useState('');
     const dispatch = useDispatch();
     const handleChange = (event) => {
         setValue(event.target.value);
         dispatch(filterLaunches(launches, event.target.value));
     };
-    console.log(value);
+
     const launches = useSelector((state) => state.launches.filteredLaunches);
-    console.log('launches', launches);
+
     return (
         <AppBar position='static' className={classes.root}>
             <Toolbar>

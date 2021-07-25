@@ -1,4 +1,9 @@
-import { GET_LAUNCHES, LAUNCH_ERROR, FILTER_LAUNCHES } from '../types';
+import {
+    GET_LAUNCHES,
+    LAUNCH_ERROR,
+    FILTER_LAUNCHES,
+    SORT_LAUNCHES,
+} from '../types';
 import axios from 'axios';
 
 export const getLaunches = () => async (dispatch) => {
@@ -16,19 +21,17 @@ export const getLaunches = () => async (dispatch) => {
     }
 };
 
-export const filterLaunches = (launches, time) => (dispatch) => {
-    console.log(time);
-    console.log('laun', launches);
+export const filterLaunches = (filterObj, sortObj) => (dispatch) => {
     dispatch({
         type: FILTER_LAUNCHES,
-        payload: {
-            time: time,
-            items:
-                time === 'all'
-                    ? launches
-                    : time === 'upcoming'
-                    ? launches.filter((item) => item.upcoming === true)
-                    : launches.filter((item) => item.upcoming === false),
-        },
+        payload: filterObj,
+    });
+    dispatch(sortLaunches(sortObj));
+};
+
+export const sortLaunches = (sortObj) => (dispatch) => {
+    dispatch({
+        type: SORT_LAUNCHES,
+        payload: sortObj,
     });
 };

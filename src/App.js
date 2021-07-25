@@ -23,7 +23,7 @@ const themes = createTheme({
             light: '#f8324526',
         },
         background: {
-            default: '#f4f5fd',
+            default: '#fff',
         },
     },
     shape: {
@@ -58,7 +58,7 @@ function App() {
                 </div>
 
                 <div className={classes.appMain}>
-                    <Header />
+                    {/* <Header /> */}
                     <Launches />
                 </div>
 
