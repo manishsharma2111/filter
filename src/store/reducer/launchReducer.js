@@ -22,25 +22,24 @@ export default function (state = initialState, action) {
             let filterData = [...state.launches];
             if (filterObj.eventType === 'upcoming') {
                 filterData = filterData.filter((x) => x.upcoming);
-            } else if (filterObj.eventType === 'past') {
+            }
+            if (filterObj.eventType === 'past') {
                 filterData = filterData.filter((x) => !x.upcoming);
             }
-            // } else if (filterObj.time.startTime === null) {
-            //     filterObj.time.startTime = '2006-03-24T22:30:00.000Z';
-            // } else if (filterObj.time.endTime === null) {
-            //     filterObj.time.endTime = moment().format();
-            // }
-            // else if (filterObj.sort === 'name') {
-            //     filterData = filterData.sort((a, b) =>
-            //         a.mission_name.localeCompare(b.mission_name)
-            //     );
-            // } else if (filterObj.sort === 'date') {
-            //     filterData = filterData.sort(function (left, right) {
-            //         return moment
-            //             .utc(left.launch_date_utc)
-            //             .diff(moment.utc(right.launch_date_utc));
-            //     });
-            // }
+            if (filterObj.time.startTime) {
+                filterData = filterData.filter((x) =>
+                    moment(x.launch_date_local).isAfter(
+                        filterObj.time.startTime
+                    )
+                );
+            }
+            console.log('2', filterData.length);
+            if (filterObj.time.endTime) {
+                filterData = filterData.filter((x) =>
+                    moment(x.launch_date_local).isBefore(filterObj.time.endTime)
+                );
+            }
+
             return {
                 ...state,
                 filteredLaunches: filterData,
@@ -49,7 +48,6 @@ export default function (state = initialState, action) {
         case SORT_LAUNCHES:
             const sortObj = action.payload;
             let sortData = [...state.filteredLaunches];
-            console.log('xxx', sortData);
             if (sortObj.sort === 'name') {
                 sortData = sortData.sort((a, b) =>
                     a.mission_name.localeCompare(b.mission_name)

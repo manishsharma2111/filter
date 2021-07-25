@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     pageContent: {
         width: '100%',
         background: 'none',
-        marginTop: theme.spacing(10),
+        marginTop: theme.spacing(1),
     },
 }));
 
